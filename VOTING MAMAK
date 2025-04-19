@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilihan Raya Mamak 2025</title>
+  <script>
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const checkboxes = document.querySelectorAll('input[name="candidates"]:checked');
+      if (checkboxes.length > 6) {
+        alert("You can only vote for up to 6 candidates!");
+        return;
+      }
+      if (checkboxes.length === 0) {
+        alert("Please select at least one candidate.");
+        return;
+      }
+
+      const selected = Array.from(checkboxes).map(cb => cb.value);
+
+      // Send to Discord Webhook
+      const webhookURL = "https://discordapp.com/api/webhooks/1363062243125624982/lTstuxbhw9JzSaMkyrS13LmKnW-2oxA-pWsMPS5GTHdhYC79jZ6Zo7Kd9CYVopGBgFwu";
+      const discordMessage = {
+        content: `🗳️ A vote has been submitted!\n✅ Selected candidates: ${selected.join(", ")}`
+      };
+
+      await fetch(webhookURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(discordMessage)
+      });
+
+      // Show thank you message
+      document.getElementById("vote-form").style.display = "none";
+      document.getElementById("thank-you").style.display = "block";
+    }
+  </script>
+</head>
+<body style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 2rem;">
+  <h1 style="text-align: center;">🗳️ Pilihan Raya Mamak Kali Ke-4 (2025)</h1>
+  <p style="text-align: center;">Sila pilih maksimum <strong>6 calon</strong> kegemaran anda daripada senarai berikut:</p>
+
+  <form id="vote-form" onsubmit="handleSubmit(event)">
+    <div style="margin: 1rem 0;">
+      <label><input type="checkbox" name="candidates" value="Ira"> Ira</label><br />
+      <label><input type="checkbox" name="candidates" value="Restberries"> Restberries</label><br />
+      <label><input type="checkbox" name="candidates" value="Niki"> Niki</label><br />
+      <label><input type="checkbox" name="candidates" value="Hannah"> Hannah</label><br />
+      <label><input type="checkbox" name="candidates" value="Mekdichan"> Mekdichan</label><br />
+      <label><input type="checkbox" name="candidates" value="Bulan"> Bulan</label><br />
+      <label><input type="checkbox" name="candidates" value="Iman"> Iman</label><br />
+      <label><input type="checkbox" name="candidates" value="Yoshrek"> Yoshrek</label><br />
+      <label><input type="checkbox" name="candidates" value="Abang Grab"> Abang Grab</label><br />
+      <label><input type="checkbox" name="candidates" value="Gulai"> Gulai</label><br />
+      <label><input type="checkbox" name="candidates" value="Fiq"> Fiq</label><br />
+      <label><input type="checkbox" name="candidates" value="Kio"> Kio</label><br />
+    </div>
+    <button type="submit" style="padding: 0.5rem 1rem; font-size: 1rem;">Hantar Undi</button>
+  </form>
+
+  <div id="thank-you" style="display: none; text-align: center;">
+    <h2>Terima kasih kerana mengundi! ✅</h2>
+  </div>
+</body>
+</html>
